@@ -1,5 +1,5 @@
 
--- Svuoto il database per fare i test
+-- Svuoto il database
 
 DROP TRIGGER IF EXISTS tratte ON Corse;
 DROP FUNCTION IF EXISTS divide_tratte();
@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS Porto CASCADE;
 
 
 
--- Creo tabelle e popolo le tabelle con dati di prova
+-- Creo le tabelle
 
 CREATE TABLE IF NOT EXISTS TipoNatante (
        nid SERIAL PRIMARY KEY NOT NULL,
@@ -84,6 +84,8 @@ CREATE TABLE IF NOT EXISTS Tratte(
   postiauto INTEGER
 );
 
+-- Creo i trigger
+
 CREATE OR REPLACE FUNCTION divide_tratte()
     RETURNS TRIGGER AS
 $$
@@ -124,9 +126,3 @@ CREATE TRIGGER addCompagnia
     AFTER INSERT ON Utenti
     FOR EACH ROW
     EXECUTE FUNCTION addCompagnia();
-
-
---INSERT INTO Corse(nid,idCompagnia, porto_partenza, porto_arrivo, scalo,orario_partenza,orario_arrivo,orario_scalo,
---                  data_inizio,data_fine,cadenza,prezzo,prezzo_rid,sovraprezzo_bag,sovraprezzo_prenot) VALUES (3, 1,1,3, 2, CURRENT_TIMESTAMP +INTERVAL '2 HOURS',CURRENT_TIMESTAMP +INTERVAL '4 HOURS', CURRENT_TIMESTAMP+INTERVAL '3 HOURS', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP+INTERVAL '365 DAYS', ARRAY['Lunedi', 'Sabato'], 12,12,12,12);
---INSERT INTO Corse(nid,idCompagnia, porto_partenza, porto_arrivo,orario_partenza,orario_arrivo,
---                  data_inizio,data_fine,cadenza,prezzo,prezzo_rid,sovraprezzo_bag,sovraprezzo_prenot) VALUES (1,1 ,1,2,CURRENT_TIMESTAMP +INTERVAL '2 HOURS',CURRENT_TIMESTAMP +INTERVAL '6 HOURS', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP+INTERVAL '365 DAYS',ARRAY['Martedi', 'Venerdi'], 5,4,3,12);

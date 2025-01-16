@@ -19,7 +19,7 @@ public class Database {
     public void registerDatabase() {
         try {
             connection = DriverManager
-                    .getConnection("jdbc:postgresql://progetto.deyvid.dev:5432/progetto",
+                    .getConnection("jdbc:postgresql://192.168.1.101:5432/progetto",
                             "progetto", "progetto1!");
         } catch (Exception e) {
             e.printStackTrace();

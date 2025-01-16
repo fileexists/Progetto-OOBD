@@ -10,15 +10,13 @@ public class Validator {
 
     public static class InvalidData extends RuntimeException {
 
-        private static final long serialVersionUID = 7052164163215272979L;
-
         public InvalidData(String msg) {
             super(msg);
             SwingUtilities.invokeLater(() -> {
                 JOptionPane.showMessageDialog(null,
-                        "<html><p style='color:red;'>"+msg+"</p></html>",
-                        "",
-                        JOptionPane.ERROR_MESSAGE);
+                    "<html><p style='color:red;'>"+msg+"</p></html>",
+                    "",
+                    JOptionPane.ERROR_MESSAGE);
             });
         }
 
@@ -96,6 +94,7 @@ public class Validator {
             throw new InvalidData("Il campo " + textField.getName() + " deve contenere un intero maggiore di 0");
         }
     }
+
     public static int getPositiveIntegerNotZero(JSpinner spinner) {
         try {
             if(!spinner.isEnabled()) return 0;
