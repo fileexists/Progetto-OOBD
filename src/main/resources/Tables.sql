@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS Corse (
     prezzo REAL,
     prezzo_rid REAL,
     sovraprezzo_prenot REAL,
-    sovraprezzo_bag REAL
+    sovraprezzo_bag REAL,
+    inRitardo BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS Tratte(

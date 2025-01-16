@@ -94,6 +94,7 @@ public class Database {
                 int portoArrivo = set.getInt(5);
                 int scalo = set.getInt(6);
 
+                boolean inRitardo = set.getBoolean(17);
 
                 String orarioPartenza = timestampToString(set.getTimestamp(7));
                 String orarioArrivo = timestampToString(set.getTimestamp(8));
@@ -112,7 +113,7 @@ public class Database {
                 int nid = set.getInt(2);
                 Natante natante = getNatanteFromID(nid, compagnia);
 
-                Corsa corsa = new Corsa(portoPartenza, portoArrivo,scalo, compagnia.getID(), orarioArrivo, orarioPartenza, orarioScalo, dataInizio, dataFine, cadenza, prezzo, prezzoRidotto, sovrapprezzoBagaglio, sovrapprezzoPrenotazione, natante, set.getInt(1));
+                Corsa corsa = new Corsa(portoPartenza, portoArrivo,scalo, compagnia.getID(), orarioArrivo, orarioPartenza, orarioScalo, dataInizio, dataFine, cadenza, prezzo, prezzoRidotto, sovrapprezzoBagaglio, sovrapprezzoPrenotazione, natante, set.getInt(1), inRitardo);
                 corse.add(corsa);
 
             }
@@ -135,6 +136,18 @@ public class Database {
             throw new RuntimeException(e);
         }
     }
+
+    public void delayCorsa(Corsa corsa){
+        String corse_table = "UPDATE CORSE SET inRitardo = true WHERE cid = ?";
+        try (PreparedStatement statement = connection.prepareStatement(corse_table)) {
+            statement.setInt(1, corsa.getID());
+            statement.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
     public FetchResult fetchCorse(List<FetchFilter> filters){
         String sql = "SELECT * FROM Corse";
 
@@ -160,6 +173,7 @@ public class Database {
                 int portoArrivo = set.getInt(5);
                 int scalo = set.getInt(6);
 
+                boolean inRitardo = set.getBoolean(17);
 
                 String orarioPartenza = timestampToString(set.getTimestamp(7));
                 String orarioArrivo = timestampToString(set.getTimestamp(8));
@@ -181,7 +195,7 @@ public class Database {
 
                 Natante natante = getNatanteFromID(nid, compagnia);
 
-                Corsa corsa = new Corsa(portoPartenza, portoArrivo,scalo, compagnia.getID(), orarioArrivo, orarioPartenza, orarioScalo, dataInizio, dataFine, cadenza, prezzo, prezzoRidotto, sovrapprezzoBagaglio, sovrapprezzoPrenotazione, natante, set.getInt(1));
+                Corsa corsa = new Corsa(portoPartenza, portoArrivo,scalo, compagnia.getID(), orarioArrivo, orarioPartenza, orarioScalo, dataInizio, dataFine, cadenza, prezzo, prezzoRidotto, sovrapprezzoBagaglio, sovrapprezzoPrenotazione, natante, set.getInt(1), inRitardo);
                 corse.add(corsa);
                 Tratte partialTratta = fetchTrattaData(corsa, portoPartenza, portoArrivo);
                 Tratte tratta = new Tratte(corsa.getID(), portoPartenza, orarioPartenza, portoArrivo, orarioArrivo, partialTratta.getPosti(), partialTratta.getPostiAuto());

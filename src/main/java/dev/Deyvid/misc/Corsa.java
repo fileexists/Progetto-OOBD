@@ -21,9 +21,10 @@ public class Corsa {
     private double prezzo, prezzoRidotto;
     private double sovrapprezzoBagagli, sovrapprezzoPrenotazione;
     private Natante natante;
+    private boolean inRitardo;
     private int id;
 
-    public Corsa(int portoPartenza, int portoArrivo, int scalo, int idCompagnia, String orarioArrivo, String orarioPartenza, String orarioScalo, String dataInizio, String dataFine, String cadenza, double prezzo, double prezzoRidotto, double sovrapprezzoBagagli, double sovrapprezzoPrenotazione, Natante natante){
+    public Corsa(int portoPartenza, int portoArrivo, int scalo, int idCompagnia, String orarioArrivo, String orarioPartenza, String orarioScalo, String dataInizio, String dataFine, String cadenza, double prezzo, double prezzoRidotto, double sovrapprezzoBagagli, double sovrapprezzoPrenotazione, Natante natante, boolean inRitardo){
         this.portoPartenza = portoPartenza;
         this.portoArrivo = portoArrivo;
         this.scalo = scalo;
@@ -38,10 +39,11 @@ public class Corsa {
         this.prezzoRidotto = prezzoRidotto;
         this.sovrapprezzoBagagli = sovrapprezzoBagagli;
         this.sovrapprezzoPrenotazione = sovrapprezzoPrenotazione;
+        this.inRitardo = inRitardo;
         this.natante = natante;
     }
 
-    public Corsa(int portoPartenza, int portoArrivo, int scalo, int idCompagnia, String orarioArrivo, String orarioPartenza, String orarioScalo, String dataInizio, String dataFine, String cadenza, double prezzo, double prezzoRidotto, double sovrapprezzoBagagli, double sovrapprezzoPrenotazione, Natante natante, int id){
+    public Corsa(int portoPartenza, int portoArrivo, int scalo, int idCompagnia, String orarioArrivo, String orarioPartenza, String orarioScalo, String dataInizio, String dataFine, String cadenza, double prezzo, double prezzoRidotto, double sovrapprezzoBagagli, double sovrapprezzoPrenotazione, Natante natante, int id, boolean inRitardo){
         this.portoPartenza = portoPartenza;
         this.portoArrivo = portoArrivo;
         this.scalo = scalo;
@@ -57,6 +59,7 @@ public class Corsa {
         this.sovrapprezzoBagagli = sovrapprezzoBagagli;
         this.sovrapprezzoPrenotazione = sovrapprezzoPrenotazione;
         this.natante = natante;
+        this.inRitardo = inRitardo;
         this.id = id;
     }
 
@@ -115,6 +118,8 @@ public class Corsa {
     public String getDataFine() {
         return dataFine;
     }
+
+    public boolean isInRitardo() { return inRitardo; }
 
     public int getID() {
         return id;

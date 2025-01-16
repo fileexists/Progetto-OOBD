@@ -162,7 +162,11 @@ public class Dashboard extends JFrame {
             panel.add(filterPanel);
             for(Corsa corsa : result.getCorse()){
                 JLabel label;
+                String ritardo = "238 238 238";
+                if(corsa.isInRitardo()) ritardo = "255 0 0";
                 if(corsa.getScalo() != 0){
+
+                    if(corsa.isInRitardo()) ritardo = "255 0 0";
                     label = new JLabel(String.format(
                             "<html><div style='border:2px solid black; padding:3px;'>" +
                                     "Porto partenza: <span style='font-weight: normal;'>%d</span><br>" +
@@ -172,10 +176,11 @@ public class Dashboard extends JFrame {
                                     "Orario arrivo: <span style='font-weight: normal;'>%s</span><br>" +
                                     "Orario scalo: <span style='font-weight: normal;'>%s</span><br>" +
                                     "Prezzo: <span style='font-weight: normal;'>%.2f</span><br>" +
+                                    "<h4 style='color:rgb(%s);font-weight: bold;'>IN RITARDO</h4>" +
                                     "</div></html>",
                             corsa.getPortoPartenza(), corsa.getPortoArrivo(), corsa.getScalo(),
                             corsa.getOrarioPartenza(), corsa.getOrarioArrivo(), corsa.getOrarioScalo(),
-                            corsa.getPrezzo()
+                            corsa.getPrezzo(), ritardo
                     ));
                 }
                 else{
@@ -186,10 +191,11 @@ public class Dashboard extends JFrame {
                                     "Orario partenza: <span style='font-weight: normal;'>%s</span><br>" +
                                     "Orario arrivo: <span style='font-weight: normal;'>%s</span><br>" +
                                     "Prezzo: <span style='font-weight: normal;'>%.2f</span><br>" +
+                                    "<h4 style='color:rgb(%s);font-weight: bold;'>IN RITARDO</h4>" +
                                     "</div></html>",
                             corsa.getPortoPartenza(), corsa.getPortoArrivo(),
                             corsa.getOrarioPartenza(), corsa.getOrarioArrivo(),
-                            corsa.getPrezzo()
+                            corsa.getPrezzo(), ritardo
                     ));
                 }
                 JButton button = new JButton("Prenota biglietto");

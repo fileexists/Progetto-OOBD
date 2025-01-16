@@ -396,19 +396,10 @@ public class DashCompagnia extends JFrame {
             for (Corsa corsa : compagnia.getCorse()) {
                 JLabel label;
                 String local_cadenza = corsa.getCadenza();
-                /*String cadenza = String.join(", ", corsa.getCadenza());
-                if (cadenza.length() > 24) {
-                    int index = -1;
-                    for (int i = 24; i < cadenza.length(); i++) {
-                        if (cadenza.charAt(i) == ',') {
-                            index = i;
-                            break;
-                        }
-                    }
-                    if (index != -1) {
-                        cadenza = cadenza.substring(0, index + 1) + "<br>   " + cadenza.substring(index + 1);
-                    }
-                }*/
+
+                String ritardo = "238 238 238";
+                if(corsa.isInRitardo()) ritardo = "255 0 0";
+
                 if(corsa.getScalo() != 0){
                     label = new JLabel(String.format(
                             "<html><div style='border:2px solid black; padding:3px;'>" +
@@ -420,10 +411,11 @@ public class DashCompagnia extends JFrame {
                                     "Orario scalo: <span style='font-weight: normal;'>%s</span><br>" +
                                     "Posti totali: <span style='font-weight: normal;'>%s</span><br>" +
                                     "Cadenza: <span style='font-weight: normal;'>%s</span><br>" +
+                                    "<h4 style='color: rgb(%s);font-weight: bold;'>IN RITARDO</h4>" +
                                     "</div></html>",
                             corsa.getPortoPartenza(), corsa.getPortoArrivo(), corsa.getScalo(),
                             corsa.getOrarioPartenza(), corsa.getOrarioArrivo(), corsa.getOrarioScalo(),
-                            corsa.getNatante().getCapienza(), local_cadenza
+                            corsa.getNatante().getCapienza(), local_cadenza, ritardo
                     ));
                 }
                 else{
@@ -434,15 +426,18 @@ public class DashCompagnia extends JFrame {
                                     "Orario partenza: <span style='font-weight: normal;'>%s</span><br>" +
                                     "Orario arrivo: <span style='font-weight: normal;'>%s</span><br>" +
                                     "Posti totali: <span style='font-weight: normal;'>%s</span><br>" +
-                                    "Cadenza: <span style='font-weight: normal;'>%s</span>" +
+                                    "Cadenza: <span style='font-weight: normal;'>%s</span><br>" +
+                                    "<h4 style='color:rgb(%s);font-weight: bold;'>IN RITARDO</h4>" +
                                     "</div></html>",
                             corsa.getPortoPartenza(), corsa.getPortoArrivo(),
                             corsa.getOrarioPartenza(), corsa.getOrarioArrivo(),
-                            corsa.getNatante().getCapienza(), local_cadenza
+                            corsa.getNatante().getCapienza(), local_cadenza, ritardo
                     ));
                 }
+
                 JButton manage = new JButton("Modifica Corsa");
                 JButton delete = new JButton("Elimina Corsa");
+                JButton delay = new JButton("Corsa in ritardo");
                 manage.addActionListener(e -> {
                     manageCorsa(corsa);
                     //dispose();
@@ -451,12 +446,17 @@ public class DashCompagnia extends JFrame {
                     deleteCorsa(corsa);
                 });
 
+                delay.addActionListener(e ->{
+                    delayCorsa(corsa);
+                });
+
                 JPanel riga = new JPanel(new BorderLayout());
                 JPanel buttonsPanel = new JPanel();
                 buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
 
                 buttonsPanel.add(manage);
                 buttonsPanel.add(delete);
+                buttonsPanel.add(delay);
                 riga.add(label, BorderLayout.WEST);
                 riga.add(buttonsPanel, BorderLayout.EAST);
                 gestisciCorse.add(riga);
@@ -545,7 +545,7 @@ public class DashCompagnia extends JFrame {
                                 scalo, compagnia.getID(), Validator.hourFormat(orarioArrivo), Validator.hourFormat(orarioPartenza), orario_scalo, periodi[0],
                                 periodi[1], Validator.cadenzaFormat(cadenza), Validator.getDouble(prezzo), Validator.getDouble(prezzoRidotto),
                                 Validator.getDouble(sovrapprezzoBagagli), Validator.getDouble(sovrapprezzoPrenotazione),
-                                compagnia.getNatanti().get(natanteCompagnia.getSelectedIndex())
+                                compagnia.getNatanti().get(natanteCompagnia.getSelectedIndex()), false
                         );
                         App.getDatabase().updateCorsa(newCorsa, corsa.getID());
                         creaCorsa.setText("Crea Corsa");
@@ -563,6 +563,12 @@ public class DashCompagnia extends JFrame {
         App.getDatabase().deleteCorsa(corsa);
         renderCorse();
     }
+
+    private void delayCorsa(Corsa corsa){
+        App.getDatabase().delayCorsa(corsa);
+        renderCorse();
+    }
+
     public void handleAddCorsa(){
         getNatanti();
 
@@ -633,7 +639,7 @@ public class DashCompagnia extends JFrame {
                                 scalo, compagnia.getID(), Validator.dateFormat(orarioArrivo), Validator.dateFormat(orarioPartenza), orario_scalo, periodi[0],
                                 periodi[1], Validator.cadenzaFormat(cadenza), Validator.getDouble(prezzo), Validator.getDouble(prezzoRidotto),
                                 Validator.getDouble(sovrapprezzoBagagli), Validator.getDouble(sovrapprezzoPrenotazione),
-                                compagnia.getNatanti().get(natanteCompagnia.getSelectedIndex())
+                                compagnia.getNatanti().get(natanteCompagnia.getSelectedIndex()), false
                         );
                         App.getDatabase().creaCorsa(corsa);
                     }
