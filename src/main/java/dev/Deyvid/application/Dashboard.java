@@ -256,7 +256,7 @@ public class Dashboard extends JFrame {
                                 throw new Validator.InvalidData("Seleziona almeno una tratta");
                             }
                         } else {
-                            System.out.println("User canceled the operation.");
+                            throw new Validator.InvalidData("Utente ha annullato");
                         }
                     }
 

@@ -95,7 +95,6 @@ public class App {
         frame = new JFrame("App");
         frame.setContentPane(new App().panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.pack();
         frame.setSize(400, 300);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

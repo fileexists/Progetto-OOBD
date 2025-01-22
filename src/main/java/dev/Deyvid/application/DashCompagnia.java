@@ -119,13 +119,6 @@ public class DashCompagnia extends JFrame {
         addPlaceholder(sovrapprezzoBagagli, "5.0");
         addPlaceholder(sovrapprezzoPrenotazione, "7.5");
 
-        //addComponentListener(new ComponentAdapter() {
-        //    @Override
-        //    public void componentResized(ComponentEvent e) {
-        //        printWindowSize();
-        //    }
-        //});
-
     }
 
     /*
@@ -141,8 +134,6 @@ public class DashCompagnia extends JFrame {
             SwingUtilities.invokeLater(() -> {
                 JFrame frame = new JFrame("Dashboard di " + utente.getUsername());
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                //frame.setSize(new Dimension(1000,1000));
-
 
                 JTextField numeroTelefono = new JTextField();
                 JTextField email = new JTextField();
@@ -578,26 +569,6 @@ public class DashCompagnia extends JFrame {
             portoScalo.addItem(porto.getID());
         }
 
-
-        // Fetch dei natanti quando fai NUOVA CORSA
-        //corseTabbed.addChangeListener(new ChangeListener() {
-        //    @Override
-        //    public void stateChanged(ChangeEvent e) {
-        //        int index = tabbedPane.getSelectedIndex();
-        //        if (index == 1)
-        //            getNatanti();
-        //    }
-        //});
-        //natanteCompagnia.addPopupMenuListener(new PopupMenuListener() {
-        //    @Override
-        //    public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-        //        getNatanti();
-        //    }
-        //    @Override
-        //    public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
-        //    @Override
-        //    public void popupMenuCanceled(PopupMenuEvent e) {}
-        //});
         scaloCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -672,18 +643,6 @@ public class DashCompagnia extends JFrame {
      *
      */
 
-    /*private void printWindowSize() {
-        // Get the size of the JFrame after resizing
-        Dimension windowSize = getSize();
-
-        // Retrieve width and height
-        int windowWidth = (int) windowSize.getWidth();
-        int windowHeight = (int) windowSize.getHeight();
-
-        // Output the window size
-        System.out.println("Window Width: " + windowWidth);
-        System.out.println("Window Height: " + windowHeight);
-    }*/
     public void getCompanyData(String nome) {
         compagnia = App.getDatabase().fetchCompanyData(nome);
 
