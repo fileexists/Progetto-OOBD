@@ -174,10 +174,10 @@ public class DashCompagnia extends JFrame {
                         else JOptionPane.showMessageDialog(frame, "Inserisci un numero di telefono valido!", "", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-                frame.getContentPane().add(panel, BorderLayout.CENTER);
-                frame.setSize(590, 380);
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
+                //frame.getContentPane().add(panel, BorderLayout.CENTER);
+                //frame.setSize(590, 380);
+                //frame.setLocationRelativeTo(null);
+                //frame.setVisible(true);
             });
         } else {
             renderNatanti();
